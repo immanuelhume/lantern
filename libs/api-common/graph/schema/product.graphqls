@@ -1,0 +1,22 @@
+type Product {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  slug: String!
+  description: String
+}
+
+type Query {
+  product(id: ID, slug: String): Product
+}
+
+input CreateProductInput {
+  name: String!
+  slug: String
+  description: String
+}
+
+type Mutation {
+  createProduct(input: CreateProductInput!): Product!
+}
