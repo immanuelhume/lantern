@@ -27,6 +27,13 @@
     ]
   },
   "projects": {
+    "nx-go": {
+      "tags": []
+    },
+    "nx-go-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nx-go"]
+    },
     "ui": {
       "tags": []
     },

@@ -1,6 +1,74 @@
 {
   "version": 2,
   "projects": {
+    "nx-go": {
+      "root": "libs/nx-go",
+      "sourceRoot": "libs/nx-go/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nx-go/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/nx-go"],
+          "options": {
+            "jestConfig": "libs/nx-go/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/nx-go",
+            "tsConfig": "libs/nx-go/tsconfig.lib.json",
+            "packageJson": "libs/nx-go/package.json",
+            "main": "libs/nx-go/src/index.ts",
+            "assets": [
+              "libs/nx-go/*.md",
+              {
+                "input": "./libs/nx-go/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/nx-go/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/nx-go",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./libs/nx-go",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-go-e2e": {
+      "root": "apps/nx-go-e2e",
+      "projectType": "application",
+      "sourceRoot": "apps/nx-go-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-go:build",
+            "jestConfig": "apps/nx-go-e2e/jest.config.js"
+          }
+        }
+      }
+    },
     "ui": {
       "root": "libs/ui",
       "sourceRoot": "libs/ui/src",

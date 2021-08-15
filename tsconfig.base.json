@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@lantern/nx-go": ["libs/nx-go/src/index.ts"],
       "@lantern/ui": ["libs/ui/src/index.ts"]
     }
   },
