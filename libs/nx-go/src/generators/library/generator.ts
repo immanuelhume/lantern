@@ -8,9 +8,9 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
-import { ApplicationGeneratorSchema } from './schema';
+import { LibraryGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends ApplicationGeneratorSchema {
+interface NormalizedSchema extends LibraryGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -19,14 +19,14 @@ interface NormalizedSchema extends ApplicationGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: ApplicationGeneratorSchema
+  options: LibraryGeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
+  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
@@ -55,10 +55,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (
-  tree: Tree,
-  options: ApplicationGeneratorSchema
-) {
+export default async function (tree: Tree, options: LibraryGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   addProjectConfiguration(tree, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
